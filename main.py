@@ -1,4 +1,5 @@
 import os
+import json
 import discord
 from dotenv import load_dotenv
 
@@ -9,6 +10,11 @@ KEYWORD = '$bt'
 
 client = discord.Client()
 
+with open('recipes.json') as recipes_file:
+    recipes = json.load(recipes_file)
+
+with open('ingredients.json') as ingredients_file:
+    ingredients = json.load(ingredients_file)
 
 @client.event
 async def on_ready():
