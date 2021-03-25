@@ -7,31 +7,47 @@ class Bartender:
     with open("ingredients.json") as ingredients_file:
         ingredients = json.load(ingredients_file)
 
+    default = "This command does not exist, to see which commands exist type '$bt help'"
+    error = "There was a problem with processing the command"
+
     def handle(self, message):
-        switcher = {
-            "help": self.help,
-            "ingredients": self.list_all_ingredients,
-            "cocktails": self.list_all_cocktails
-        }
-        print(message)
-        argument = message.content[3:].strip()
-        func = switcher.get(argument, "This command does not exist, to see which commands exist type '$bt help'")
-        # Execute the function
-        return func()
+        # Remove KEYWORD
+        argument = message.content[3:].strip().lower()
+        answer = self.default
+        if argument == "help":
+            answer = "This will list all commands"
+        elif argument == "ingredients":
+            answer = self.get_all_ingredients()
+        elif argument == "cocktails":
+            answer = self.get_all_cocktails()
+        elif argument.startswith("count"):
+            parameters = self.remove_from_word(argument, "count").strip()
+            answer = self.get_count(parameters)
+        return answer
 
-    def help(self):
-        # TODO write a list of all commands
-        return "This will list all commands"
-
-    def list_all_ingredients(self):
-        string = ""
+    def get_all_ingredients(self):
+        answer = ""
         for key, value in self.ingredients.items():
-            string += key + " (" + str(value.get("abv")) + "%)\n"
-        return string
+            answer += key + " (" + str(value.get("abv")) + "%)\n"
+        return answer
 
-    def list_all_cocktails(self):
-        string = ""
+    def get_all_cocktails(self):
+        answer = ""
         for cocktail in self.recipes:
-            string += cocktail.get("name") + "\n"
-        return string
+            answer += cocktail.get("name") + "\n"
+        return answer
+
+    def remove_from_word(self, word, toRemove):
+        return word[word.find(toRemove) + len(toRemove):]
+
+    def get_count(self, parameters):
+        print(parameters)
+        answer = ""
+        if parameters == "ingredients":
+            answer = len(self.ingredients)
+        elif parameters == "cocktails":
+            answer = len(self.recipes)
+        else:
+            answer = self.error
+        return answer
 
