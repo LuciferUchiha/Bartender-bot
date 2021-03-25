@@ -1,6 +1,5 @@
 import json
 
-
 class Bartender:
     with open("recipes.json") as recipes_file:
         recipes = json.load(recipes_file)
@@ -35,3 +34,4 @@ class Bartender:
         for cocktail in self.recipes:
             string += cocktail.get("name") + "\n"
         return string
+
