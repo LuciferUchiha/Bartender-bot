@@ -35,12 +35,12 @@ $bt find -c <search criteria>
 $bt find -i <search criteria>
 ``` 
 
-### List all cocktails (Menu)
+### List all cocktails
 ``` 
 $bt cocktails
 ```
 
-### List all ingredients (Kitchen)
+### List all ingredients
 ``` 
 $bt ingredients
 ```
@@ -50,7 +50,7 @@ $bt ingredients
 $bt categories
 ```
 
-### List all cocktails by category (Menu)
+### List all cocktails by category
 ``` 
 $bt list <category>
 ```
@@ -70,12 +70,12 @@ $bt count ingredients
 $bt with <ingredient>, <ingredient...
 ```
 
-### How to make a cocktail (Recipe)
+### How to make a cocktail
 ``` 
 $bt recipe <cocktail>
 ```
 
-### List possible commands (Help)
+### List all commands
 ``` 
 $bt help
 ```
