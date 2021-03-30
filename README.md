@@ -24,60 +24,61 @@ git clone https://github.com/LuciferUchiha/BartenderBot.git
 ```
 
 ## Usage:
+The following words are correct keywords (<KW>): ```$bt, bartender and god```
 
 ### Find cocktail
 ``` 
-$bt find -c <search criteria>
+<KW> find -c <search criteria>
 ``` 
 
 ### Find ingredient 
 ``` 
-$bt find -i <search criteria>
+<KW> find -i <search criteria>
 ``` 
 
 ### List all cocktails ✅
 ``` 
-$bt cocktails
+<KW> cocktails
 ```
 
 ### List all ingredients ✅
 ``` 
-$bt ingredients
+<KW> ingredients
 ```
 
 ### List all categories ✅
 ``` 
-$bt categories
+<KW> categories
 ```
 
-### List all cocktails by category
+### List all cocktails by category ✅
 ``` 
-$bt list <category>
+<KW> list <category>
 ```
 
 ### How many cocktails? ✅
 ``` 
-$bt count cocktails
+<KW> count cocktails
 ```
 
 ### How many ingredients? ✅
 ``` 
-$bt count ingredients
+<KW> count ingredients
 ```
 
 ### Cocktails with ingredient
 ``` 
-$bt with <ingredient>, <ingredient...
+<KW> with <ingredient>, <ingredient...
 ```
 
 ### How to make a cocktail ✅
 ``` 
-$bt recipe <cocktail>
+<KW> recipe <cocktail>
 ```
 
 ### List all commands ⚠️
 ``` 
-$bt help
+<KW> help
 ```
 
 ## License
