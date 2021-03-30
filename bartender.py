@@ -8,15 +8,13 @@ class Bartender:
     with open("ingredients.json") as ingredients_file:
         ingredients = json.load(ingredients_file)
 
-    default = "This command does not exist, to see which commands exist type '$bt help'"
+    default = "This command does not exist or you mistyped something"
     error = "There was a problem with processing the command"
 
     def handle(self, message):
         command_prefix = message.content.strip().lower()
         answer = self.default
-        if command_prefix == "help":
-            answer = "This will list all commands"
-        elif self.starts_with_ingredients_prefix(command_prefix):
+        if self.starts_with_ingredients_prefix(command_prefix):
             answer = self.get_all_ingredients()
         elif self.starts_with_cocktails_prefix(command_prefix):
             answer = self.get_all_cocktails()

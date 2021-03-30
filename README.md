@@ -87,11 +87,6 @@ Will return all cocktails that contain passed ingredients. Multiple ingredients 
 <KW> recipe <cocktail>
 ```
 
-### List all commands 
-``` 
-<KW> help
-```
-
 ## License
 Distributed under the MIT License. See `LICENSE.md` for more information.
 
