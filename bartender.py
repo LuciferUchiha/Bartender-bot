@@ -29,7 +29,9 @@ class Bartender:
         elif command_prefix.startswith("list"):
             answer = self.get_cocktails_by_category(command_prefix.removeprefix("list").strip())
         elif command_prefix.startswith("find"):
-            answer = self.find(command_prefix.removeprefix("find").strip)
+            answer = self.find(command_prefix.removeprefix("find").strip())
+        elif command_prefix.startswith("with"):
+            answer = self.get_cocktails_with(command_prefix.removeprefix("with").strip())
         return answer
 
     def get_all_ingredients(self):
@@ -157,5 +159,20 @@ class Bartender:
         for ingredient in self.ingredients.keys():
             if criteria in ingredient.lower():
                 answer += f"{ingredient}\n"
+
+        return answer
+
+    def get_cocktails_with(self, param):
+        answer = ""
+        for ingredient in param.strip().split():
+            print(ingredient)
+            for cocktail in self.recipes:
+                cocktail_ingredients = cocktail.get("ingredients")
+                print(cocktail_ingredients)
+                for cocktail_ingredient in cocktail_ingredients:
+                    if cocktail_ingredient.get("ingredient") is not None and ingredient in cocktail_ingredient.get(
+                            "ingredient").lower():
+                        answer += f"{cocktail.get('name')}\n"
+                        continue
 
         return answer
