@@ -33,18 +33,21 @@ class Bartender:
         return answer
 
     def get_all_ingredients(self):
+        """Returns a string containing all of the ingredients the bot knows."""
         answer = ""
         for key, value in self.ingredients.items():
             answer += f"{key} ({value.get('abv')}%)\n"
         return answer
 
     def get_all_cocktails(self):
+        """Returns a string containing the names of all of the cocktails the bot knows."""
         answer = ""
         for cocktail in self.recipes:
             answer += f"{cocktail.get('name')}\n"
         return answer
 
     def get_all_categories(self):
+        """Returns a string containing all the cocktail categories the bot knows."""
         answer = ""
         categories_list = []
         for cocktail in self.recipes:
@@ -57,6 +60,7 @@ class Bartender:
         return answer
 
     def get_count(self, param):
+        """Returns the amount of ingredients or cocktails the bot knows."""
         answer = self.error
         if self.starts_with_ingredients_prefix(param):
             answer = len(self.ingredients)
@@ -66,6 +70,7 @@ class Bartender:
         return answer
 
     def get_recipe(self, param):
+        """Returns the full recipe for the passed cocktail name."""
         answer = f"There is no recipe for a cocktail called {param}. To see all cocktails with a recipe " \
                  f"type '$bt cocktails'"
         for cocktail in self.recipes:
@@ -81,6 +86,8 @@ class Bartender:
         return answer
 
     def get_formatted_ingredients(self, ingredients):
+        """Returns a string of ingredients formatted as list for the cocktails including the special ones if it has
+        any."""
         formatted_ingredients = ""
         special_ingredients = ""
         for ingredient in ingredients:
@@ -95,6 +102,7 @@ class Bartender:
         return formatted_ingredients + special_ingredients
 
     def get_garnisch(self, cocktail):
+        """Returns the garnish for the cocktail if it has one."""
         if cocktail.get("garnish") is not None:
             return f"**Garnish:**\n" \
                    f" - {cocktail.get('garnish')} \n"
@@ -102,17 +110,21 @@ class Bartender:
             return ""
 
     def get_cocktails_by_category(self, category):
+        """Returns all cocktails in the given category."""
         answer = ""
         for cocktail in self.recipes:
             if category == str(cocktail.get("category")).lower():
                 answer += f"{cocktail.get('name')}\n"
 
-        return answer
+        return answer if len(answer) > 0 else f"There is no category called {category} or it contains no cocktails"
 
     def starts_with_cocktails_prefix(self, param):
+        """Returns true if passed string starts with the cocktails prefix (-c or cocktails)."""
         return param.startswith("-c") or param.startswith("cocktails")
 
     def remove_cocktails_prefix(self, param):
+        """Returns a string with the cocktails prefix (-c or cocktails) removed. If the string does not start with
+        the cocktails prefix it will return the original string."""
         if param.startswith("-c"):
             param = param.removeprefix("-c")
         elif param.startswith("cocktails"):
@@ -120,9 +132,12 @@ class Bartender:
         return param
 
     def starts_with_ingredients_prefix(self, param):
+        """Returns true if passed string starts with the ingredient prefix (-i or ingredients)."""
         return param.startswith("-i") or param.startswith("ingredients")
 
     def remove_ingredients_prefix(self, param):
+        """Returns a string with the ingredient prefix (-i or ingredients) removed. If the string does not start with
+        the ingredients prefix it will return the original string."""
         if param.startswith("-i"):
             param = param.removeprefix("-i")
         elif param.startswith("ingredients"):
@@ -130,6 +145,7 @@ class Bartender:
         return param
 
     def find(self, param):
+        """Returns all ingredients or cocktails containing the criteria in the parameter separated by commas."""
         answer = ""
         if self.starts_with_cocktails_prefix(param):
             param = self.remove_cocktails_prefix(param)
@@ -142,35 +158,41 @@ class Bartender:
                 answer += f"**Criteria: {criteria}**\n"
                 answer += self.get_ingredients_containing(criteria)
 
-        return answer
+        return answer if len(answer) > 0 else "Nothing was found matching your criteria"
 
     def get_cocktails_containing(self, criteria):
+        """Returns all cocktails containing the criteria in its name."""
         answer = ""
         for cocktail in self.recipes:
             if criteria in str(cocktail.get("name")).lower():
                 answer += f"{cocktail.get('name')}\n"
 
-        return answer
+        return answer if len(answer) > 0 else "Nothing was found matching your criteria"
 
     def get_ingredients_containing(self, criteria):
+        """Returns all ingredients containing the criteria in its name."""
         answer = ""
         for ingredient in self.ingredients.keys():
             if criteria in ingredient.lower():
                 answer += f"{ingredient}\n"
 
-        return answer
+        return answer if len(answer) > 0 else "Nothing was found matching your criteria"
 
     def get_cocktails_with(self, param):
+        """Returns all cocktails containing the searched for ingredients in the parameter separated by commas."""
         answer = ""
-        for ingredient in param.strip().split():
-            print(ingredient)
+        for ingredient in param.strip().split(","):
             for cocktail in self.recipes:
                 cocktail_ingredients = cocktail.get("ingredients")
-                print(cocktail_ingredients)
-                for cocktail_ingredient in cocktail_ingredients:
-                    if cocktail_ingredient.get("ingredient") is not None and ingredient in cocktail_ingredient.get(
-                            "ingredient").lower():
-                        answer += f"{cocktail.get('name')}\n"
-                        continue
+                answer += self.does_cocktail_contain(cocktail, cocktail_ingredients, ingredient.strip())
 
-        return answer
+        return answer if len(answer) > 0 else "Nothing was found matching your criteria"
+
+    def does_cocktail_contain(self, cocktail, cocktail_ingredients, ingredient):
+        """Returns the name of the cocktail if the cocktail contains the searched for ingredient."""
+        for cocktail_ingredient in cocktail_ingredients:
+            if cocktail_ingredient.get("ingredient") is not None and ingredient in cocktail_ingredient.get(
+                    "ingredient").lower():
+                return f"{cocktail.get('name')}\n"
+
+        return ""

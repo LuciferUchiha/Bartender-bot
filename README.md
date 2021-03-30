@@ -3,8 +3,6 @@
 ## Table of Contents
 
 * [About the Project](#about-the-project)
-  * [Built With](#built-with)
-* [Prerequisites](#prerequisites)
 * [Installation](#installation)
 * [Usage](#usage)
 * [License](#license)
@@ -12,16 +10,22 @@
 
 ## About The Project
 
-### Built With
+This is a simple discord bot that was implemented with Python 3.8. The bot helps you 
+with thirsty needs by providing you recipes for cocktails. It also allows you to search 
+for cocktails by ingredients or name.
 
-## Prerequisites
 
 ## Installation
-
-Clone the project and open it in your IDEA.
-``` 
-git clone https://github.com/LuciferUchiha/BartenderBot.git
-```
+1. Go to [discord developer portal](https://discord.com/developers/applications).
+2. Create a new application.
+3. Under the "Bot" tab on the left create a new bot.
+4. Go to the "OAuth2" tab on the left.
+5. Select bot from the "Scopes" options and select at least "Send Messages", 
+"Manage Messages" and "Read Message History" permissions.
+6. Copy the URL that was generated for you, paste it into your browser, and 
+select your server from the dropdown options. The bot should now be added.
+7. Clone the project and open it in your IDEA.<br>```git clone https://github.com/LuciferUchiha/BartenderBot.git```
+8. Install the dependencies by running ```pip install -r requirements.txt``` in the project root.
 
 ## Usage:
 The following words are correct keywords (\<KW\>): ```$bt, bartender and god```
