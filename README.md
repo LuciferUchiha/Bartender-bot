@@ -34,15 +34,16 @@ cocktails <=> -c
 ingredients <=> -i
 ```
 
-### Find cocktail
-Will return any cocktail if it contains the search criteria. Multiple search criteria can be used by separating them with a space
+### Find cocktail✅
+Will return any cocktail if it contains the search criteria. Multiple search criteria can be used by separating them with a space.
 ``` 
 <KW> find cocktails <search criteria1> <search criteria2> ...
 ``` 
 
-### Find ingredient 
+### Find ingredient ✅
+Will return any ingredients if it contains the search criteria. Multiple search criteria can be used by separating them with a space.
 ``` 
-<KW> find ingredients <search criteria>
+<KW> find ingredients <search criteria1> <search criteria2> ...
 ``` 
 
 ### List all cocktails ✅
@@ -76,8 +77,9 @@ Will return any cocktail if it contains the search criteria. Multiple search cri
 ```
 
 ### Cocktails with ingredient
+Will return any cocktail if it contains the ingredient. Multiple ingredients can be used by separating them with a space.
 ``` 
-<KW> with <ingredient> <ingredient2> ...
+<KW> cocktail with <ingredient> <ingredient2> ...
 ```
 
 ### How to make a cocktail ✅

@@ -29,6 +29,4 @@ async def on_message(message):
             message.content = message.content.removeprefix(prefix)
         await message.channel.send(Bartender().handle(message))
 
-
-
 client.run(TOKEN)
