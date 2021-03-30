@@ -45,7 +45,7 @@ $bt cocktails
 $bt ingredients
 ```
 
-### List all categories
+### List all categories ✅
 ``` 
 $bt categories
 ```
