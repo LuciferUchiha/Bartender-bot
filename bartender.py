@@ -12,28 +12,24 @@ class Bartender:
     error = "There was a problem with processing the command"
 
     def handle(self, message):
-        argument = message.content.strip().lower()
+        command_prefix = message.content.strip().lower()
         answer = self.default
-        if argument == "help":
+        if command_prefix == "help":
             answer = "This will list all commands"
-        elif argument == "ingredients":
+        elif self.starts_with_ingredients_prefix(command_prefix):
             answer = self.get_all_ingredients()
-        elif argument == "cocktails":
+        elif self.starts_with_cocktails_prefix(command_prefix):
             answer = self.get_all_cocktails()
-        elif argument == "categories":
+        elif command_prefix == "categories":
             answer = self.get_all_categories()
-        elif argument.startswith("count"):
-            parameters = self.remove_from_word(argument, "count").strip()
-            answer = self.get_count(parameters)
-        elif argument.startswith("recipe"):
-            parameters = self.remove_from_word(argument, "recipe").strip()
-            answer = self.get_recipe(parameters)
-        elif argument.startswith("list"):
-            parameters = self.remove_from_word(argument, "list").strip()
-            answer = self.get_cocktails_by_category(parameters)
-        elif argument.startswith("find"):
-            parameters = self.remove_from_word(argument, "find").strip()
-            answer = self.find(parameters)
+        elif command_prefix.startswith("count"):
+            answer = self.get_count(command_prefix.removeprefix("count").strip())
+        elif command_prefix.startswith("recipe"):
+            answer = self.get_recipe(command_prefix.removeprefix("recipe").strip())
+        elif command_prefix.startswith("list"):
+            answer = self.get_cocktails_by_category(command_prefix.removeprefix("list").strip())
+        elif command_prefix.startswith("find"):
+            answer = self.find(command_prefix.removeprefix("find").strip)
         return answer
 
     def get_all_ingredients(self):
@@ -53,7 +49,6 @@ class Bartender:
         categories_list = []
         for cocktail in self.recipes:
             categories_list.append(cocktail.get("category"))
-
         # Remove duplicates
         categories_list = list(set(categories_list))
         categories_list.sort(key=str)
@@ -61,25 +56,22 @@ class Bartender:
             answer += f"{category}\n"
         return answer
 
-    def remove_from_word(self, word, toRemove):
-        return word[word.find(toRemove) + len(toRemove):]
-
-    def get_count(self, parameters):
+    def get_count(self, param):
         answer = self.error
-        if parameters == "ingredients":
+        if self.starts_with_ingredients_prefix(param):
             answer = len(self.ingredients)
-        elif parameters == "cocktails":
+        elif self.starts_with_cocktails_prefix(param):
             answer = len(self.recipes)
 
         return answer
 
-    def get_recipe(self, parameter):
-        answer = f"There is no recipe for a cocktail called {parameter}. To see all cocktails with a recipe " \
+    def get_recipe(self, param):
+        answer = f"There is no recipe for a cocktail called {param}. To see all cocktails with a recipe " \
                  f"type '$bt cocktails'"
         for cocktail in self.recipes:
-            formatted_ingredients = self.get_formatted_ingredients(cocktail.get("ingredients"))
-            garnish = self.get_garnisch(cocktail)
-            if parameter == cocktail.get("name").lower():
+            if param == cocktail.get("name").lower():
+                formatted_ingredients = self.get_formatted_ingredients(cocktail.get("ingredients"))
+                garnish = self.get_garnisch(cocktail)
                 return f"__**{cocktail.get('name')}**__\n" \
                        f"**Ingriedients:**\n" \
                        f"{formatted_ingredients}" \
@@ -117,36 +109,36 @@ class Bartender:
 
         return answer
 
-    def starts_with_cocktails_prefix(self, string):
-        return string.startswith("-c") or string.startswith("cocktails")
+    def starts_with_cocktails_prefix(self, param):
+        return param.startswith("-c") or param.startswith("cocktails")
 
-    def remove_cocktails_prefix(self, string):
-        if string.startswith("-c"):
-            string = string.removeprefix("-c")
-        elif string.startswith("cocktails"):
-            string = string.removeprefix("cocktails")
-        return string
+    def remove_cocktails_prefix(self, param):
+        if param.startswith("-c"):
+            param = param.removeprefix("-c")
+        elif param.startswith("cocktails"):
+            param = param.removeprefix("cocktails")
+        return param
 
-    def starts_with_ingredients_prefix(self, string):
-        return string.startswith("-i") or string.startswith("ingredients")
+    def starts_with_ingredients_prefix(self, param):
+        return param.startswith("-i") or param.startswith("ingredients")
 
-    def remove_ingredients_prefix(self, string):
-        if string.startswith("-i"):
-            string = string.removeprefix("-i")
-        elif string.startswith("ingredients"):
-            string = string.removeprefix("ingredients")
-        return string
+    def remove_ingredients_prefix(self, param):
+        if param.startswith("-i"):
+            param = param.removeprefix("-i")
+        elif param.startswith("ingredients"):
+            param = param.removeprefix("ingredients")
+        return param
 
-    def find(self, string):
+    def find(self, param):
         answer = ""
-        if self.starts_with_cocktails_prefix(string):
-            string = self.remove_cocktails_prefix(string)
-            for criteria in string.strip().split():
+        if self.starts_with_cocktails_prefix(param):
+            param = self.remove_cocktails_prefix(param)
+            for criteria in param.strip().split():
                 answer += f"**Criteria: {criteria}**\n"
                 answer += self.get_cocktails_containing(criteria)
-        elif self.starts_with_ingredients_prefix(string):
-            string = self.remove_ingredients_prefix(string)
-            for criteria in string.strip().split():
+        elif self.starts_with_ingredients_prefix(param):
+            param = self.remove_ingredients_prefix(param)
+            for criteria in param.strip().split():
                 answer += f"**Criteria: {criteria}**\n"
                 answer += self.get_ingredients_containing(criteria)
 

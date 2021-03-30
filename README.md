@@ -29,9 +29,10 @@ The following words are correct keywords (\<KW\>): ```$bt, bartender and god```
 #### Shortcuts
 The following values are equivalent:
 
-|Full        | Short|
-|cocktails   |    -c|
-|ingredients |    -i|
+```
+cocktails <=> -c
+ingredients <=> -i
+```
 
 ### Find cocktail
 Will return any cocktail if it contains the search criteria. Multiple search criteria can be used by separating them with a space
