@@ -21,6 +21,8 @@ class Bartender:
             answer = self.get_all_ingredients()
         elif argument == "cocktails":
             answer = self.get_all_cocktails()
+        elif argument == "categories":
+            answer = self.get_all_categories()
         elif argument.startswith("count"):
             parameters = self.remove_from_word(argument, "count").strip()
             answer = self.get_count(parameters)
@@ -39,6 +41,19 @@ class Bartender:
         answer = ""
         for cocktail in self.recipes:
             answer += f"{cocktail.get('name')}\n"
+        return answer
+
+    def get_all_categories(self):
+        answer = ""
+        categories_list = []
+        for cocktail in self.recipes:
+            categories_list.append(cocktail.get("category"))
+
+        # Remove duplicates
+        categories_list = list(set(categories_list))
+        categories_list.sort(key=str)
+        for category in categories_list:
+            answer += f"{category}\n"
         return answer
 
     def remove_from_word(self, word, toRemove):
