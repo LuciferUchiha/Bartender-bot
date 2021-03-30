@@ -24,7 +24,7 @@ git clone https://github.com/LuciferUchiha/BartenderBot.git
 ```
 
 ## Usage:
-The following words are correct keywords (<KW>): ```$bt, bartender and god```
+The following words are correct keywords (\<KW\>): ```$bt, bartender and god```
 
 #### Shortcuts
 The following values are equivalent:
