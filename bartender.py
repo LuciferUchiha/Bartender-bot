@@ -12,8 +12,7 @@ class Bartender:
     error = "There was a problem with processing the command"
 
     def handle(self, message):
-        # Remove KEYWORD
-        argument = message.content[3:].strip().lower()
+        argument = message.content.strip().lower()
         answer = self.default
         if argument == "help":
             answer = "This will list all commands"
@@ -29,6 +28,9 @@ class Bartender:
         elif argument.startswith("recipe"):
             parameters = self.remove_from_word(argument, "recipe").strip()
             answer = self.get_recipe(parameters)
+        elif argument.startswith("list"):
+            parameters = self.remove_from_word(argument, "list").strip()
+            answer = self.get_cocktails_by_category(parameters)
         return answer
 
     def get_all_ingredients(self):
@@ -81,9 +83,7 @@ class Bartender:
                        f"{formatted_ingredients}" \
                        f"{garnish}" \
                        f"**Preparation:**\n" \
-                       f"{cocktail.get('preparation')} \n" \
-
-
+                       f"{cocktail.get('preparation')} \n"
         return answer
 
     def get_formatted_ingredients(self, ingredients):
@@ -106,3 +106,11 @@ class Bartender:
                    f" - {cocktail.get('garnish')} \n"
         else:
             return ""
+
+    def get_cocktails_by_category(self, category):
+        answer = ""
+        for cocktail in self.recipes:
+            if category == str(cocktail.get("category")).lower():
+                answer += f"{cocktail.get('name')}\n"
+
+        return answer

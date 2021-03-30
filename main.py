@@ -7,7 +7,7 @@ from bartender import Bartender
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 GUILD = os.getenv("DISCORD_GUILD")
-KEYWORD = "$bt"
+KEYWORDS = ("$bt", "bartender", "god")
 
 client = discord.Client()
 
@@ -24,7 +24,9 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if message.author != client.user and message.content.startswith(KEYWORD):
+    if message.author != client.user and message.content.lower().startswith(KEYWORDS):
+        for prefix in KEYWORDS:
+            message.content = message.content.removeprefix(prefix)
         await message.channel.send(Bartender().handle(message))
 
 
