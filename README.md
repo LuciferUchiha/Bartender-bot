@@ -26,6 +26,7 @@ for cocktails by ingredients or name.
 select your server from the dropdown options. The bot should now be added.
 7. Clone the project and open it in your IDEA.<br>```git clone https://github.com/LuciferUchiha/BartenderBot.git```
 8. Install the dependencies by running ```pip install -r requirements.txt``` in the project root.
+9. Create a ```.env``` file and add DISCORD_TOKEN=<token> replacing <token> with your bot token from the [discord developer portal](https://discord.com/developers/applications). On a new line also add DISCORD_GUILD=<server> replacing <server> with your server name.
 
 ## Usage:
 The following words are correct keywords (\<KW\>): ```$bt, bartender and god```
