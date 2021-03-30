@@ -30,17 +30,17 @@ git clone https://github.com/LuciferUchiha/BartenderBot.git
 $bt find -c <search criteria>
 ``` 
 
-### Find ingredient
+### Find ingredient 
 ``` 
 $bt find -i <search criteria>
 ``` 
 
-### List all cocktails
+### List all cocktails ✅
 ``` 
 $bt cocktails
 ```
 
-### List all ingredients
+### List all ingredients ✅
 ``` 
 $bt ingredients
 ```
@@ -55,12 +55,12 @@ $bt categories
 $bt list <category>
 ```
 
-### How many cocktails?
+### How many cocktails? ✅
 ``` 
 $bt count cocktails
 ```
 
-### How many ingredients?
+### How many ingredients? ✅
 ``` 
 $bt count ingredients
 ```
@@ -70,12 +70,12 @@ $bt count ingredients
 $bt with <ingredient>, <ingredient...
 ```
 
-### How to make a cocktail
+### How to make a cocktail ✅
 ``` 
 $bt recipe <cocktail>
 ```
 
-### List all commands
+### List all commands ⚠️
 ``` 
 $bt help
 ```
