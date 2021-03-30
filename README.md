@@ -26,14 +26,22 @@ git clone https://github.com/LuciferUchiha/BartenderBot.git
 ## Usage:
 The following words are correct keywords (<KW>): ```$bt, bartender and god```
 
+#### Shortcuts
+The following values are equivalent:
+
+|Full        | Short|
+|cocktails   |    -c|
+|ingredients |    -i|
+
 ### Find cocktail
+Will return any cocktail if it contains the search criteria. Multiple search criteria can be used by separating them with a space
 ``` 
-<KW> find -c <search criteria>
+<KW> find cocktails <search criteria1> <search criteria2> ...
 ``` 
 
 ### Find ingredient 
 ``` 
-<KW> find -i <search criteria>
+<KW> find ingredients <search criteria>
 ``` 
 
 ### List all cocktails ✅
@@ -68,7 +76,7 @@ The following words are correct keywords (<KW>): ```$bt, bartender and god```
 
 ### Cocktails with ingredient
 ``` 
-<KW> with <ingredient>, <ingredient...
+<KW> with <ingredient> <ingredient2> ...
 ```
 
 ### How to make a cocktail ✅

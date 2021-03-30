@@ -31,6 +31,9 @@ class Bartender:
         elif argument.startswith("list"):
             parameters = self.remove_from_word(argument, "list").strip()
             answer = self.get_cocktails_by_category(parameters)
+        elif argument.startswith("find"):
+            parameters = self.remove_from_word(argument, "find").strip()
+            answer = self.find(parameters)
         return answer
 
     def get_all_ingredients(self):
@@ -62,7 +65,6 @@ class Bartender:
         return word[word.find(toRemove) + len(toRemove):]
 
     def get_count(self, parameters):
-        print(parameters)
         answer = self.error
         if parameters == "ingredients":
             answer = len(self.ingredients)
@@ -112,5 +114,56 @@ class Bartender:
         for cocktail in self.recipes:
             if category == str(cocktail.get("category")).lower():
                 answer += f"{cocktail.get('name')}\n"
+
+        return answer
+
+    def starts_with_cocktails_prefix(self, string):
+        return string.startswith("-c") or string.startswith("cocktails")
+
+    def remove_cocktails_prefix(self, string):
+        if string.startswith("-c"):
+            string = string.removeprefix("-c")
+        elif string.startswith("cocktails"):
+            string = string.removeprefix("cocktails")
+        return string
+
+    def starts_with_ingredients_prefix(self, string):
+        return string.startswith("-i") or string.startswith("ingredients")
+
+    def remove_ingredients_prefix(self, string):
+        if string.startswith("-i"):
+            string = string.removeprefix("-i")
+        elif string.startswith("ingredients"):
+            string = string.removeprefix("ingredients")
+        return string
+
+    def find(self, string):
+        answer = ""
+        if self.starts_with_cocktails_prefix(string):
+            string = self.remove_cocktails_prefix(string)
+            for criteria in string.strip().split():
+                answer += f"**Criteria: {criteria}**\n"
+                answer += self.get_cocktails_containing(criteria)
+        elif self.starts_with_ingredients_prefix(string):
+            string = self.remove_ingredients_prefix(string)
+            for criteria in string.strip().split():
+                answer += f"**Criteria: {criteria}**\n"
+                answer += self.get_ingredients_containing(criteria)
+
+        return answer
+
+    def get_cocktails_containing(self, criteria):
+        answer = ""
+        for cocktail in self.recipes:
+            if criteria in str(cocktail.get("name")).lower():
+                answer += f"{cocktail.get('name')}\n"
+
+        return answer
+
+    def get_ingredients_containing(self, criteria):
+        answer = ""
+        for ingredient in self.ingredients.keys():
+            if criteria in ingredient.lower():
+                answer += f"{ingredient}\n"
 
         return answer
